@@ -38,3 +38,28 @@ export const useGachaStatus = () => {
 
   return { gachaStatus };
 };
+
+const postGachaStart = async () => {
+  try {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/gacha/start`);
+    return res.data;
+  } catch {
+    return null;
+  }
+}
+
+export const useGachaStart = () => {
+  const [result, setResult] = useState<string>();
+
+  const fetchData = async () => {
+    try {
+      const result = await postGachaStart();
+      setResult(result.data ? "waiting" : "error");
+    } catch (error) {
+      console.error("Failed to fetch data");
+      setResult("error")
+    }
+  };
+
+  return { fetchData, result };
+};
