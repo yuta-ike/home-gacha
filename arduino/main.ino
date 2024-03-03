@@ -3,22 +3,19 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 #include <ESP32Servo.h>
-// #include <BluetoothA2DPSink.h>
+#include <WiFiClientSecure.h>
 
 const char* ssid = "SPWH_L11_6C7326";
 const char* password = "6L28VUS256";
-const char* serverUrl = "https://jsonplaceholder.typicode.com/posts/1";
+const char* serverUrl = "https://tmp-home-gacha-pahvxp7a3a-uc.a.run.app/gacha/draw";
 
-Servo myservo;      // サーボオブジェクトを作成
-int pos = 0;        // サーボの現在の位置
-int servoPin = 26;  // サーボが接続されているGPIOピン
-// int beepPin = 25;   // 音を出すGPIOピン
+Servo myservo;
+int pos = 0;
+int servoPin = 26;
 
-// QRコードに含めるデータ
-// const char *data = "https://example.com";
+WiFiClientSecure secureClient;
 
-// BluetoothA2DPSink a2dp_sink;
-
+bool shouldFetchData = true;  // API通信を制御するフラグ
 
 void setup() {
   M5.begin();
@@ -28,71 +25,79 @@ void setup() {
   M5.Lcd.setTextColor(WHITE);
   M5.Lcd.setTextSize(2);
 
-  myservo.attach(servoPin);  // サーボをGPIO26に接続
+  myservo.attach(servoPin);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.println("Connecting to WiFi..");
   }
-
   Serial.println("Connected to WiFi");
-  fetchAndDisplayData();
-
-  // a2dp_sink.start("ESP32_A2DP_Sink");  // Bluetoothデバイスの名前を設定
-
-  // ledcSetup(0, 2000, 8); // チャネル0、2 kHz、8ビット解像度
-  // ledcAttachPin(beepPin, 0); // GPIO 26をチャネル0にアタッチ
-
-  // M5.Lcd.qrcode(data,50,10,220,5);
-
 }
 
-void fetchAndDisplayData() {
-  if ((WiFi.status() == WL_CONNECTED)) {
+bool fetchAndDisplayData() {
+  if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(serverUrl);      // Specify the URL
-    int httpCode = http.GET();  // Make the request
+    secureClient.setInsecure();  // FIXME: サーバー証明書の検証をスキップする
+    http.begin(secureClient, serverUrl);
+    int httpCode = http.GET();
 
-    if (httpCode > 0) {  // Check for the returning code
-      String payload = http.getString();
+    M5.Lcd.println(httpCode);
+
+    if (httpCode == 400) {
+      Serial.println("400 Not Found: queueが見つかりません");
+      http.end();
+      return false;
+    } else if (httpCode > 0) {
       Serial.println(httpCode);
+      String payload = http.getString();
       Serial.println(payload);
-
-      DynamicJsonDocument doc(1024);
-      deserializeJson(doc, payload);
-      String title = doc["title"].as<String>();
-      M5.Lcd.setCursor(0, 0);
-      M5.Lcd.println(title);
+      http.end();
+      return true;
     } else {
       Serial.println("Error on HTTP request");
+      http.end();
+      return false;
     }
-    http.end();  // Free the resources
   }
+  return false;
 }
 
 void loop() {
-  bool canRotate = true;
-  if(canRotate) {
-    myservo.write(0);
-    for (pos = 0; pos <= 160; pos += 1) {
-      myservo.write(pos);
-      delay(5);  // サーボが動くのを待つ
-    }
-    delay(4000);
-    for (pos = 160; pos >= 0; pos -= 1) {
-      myservo.write(pos);
-      delay(5);  // サーボが動くのを待つ
-    }
+  M5.update();  // M5Stackのボタン状態を更新
+
+  // ボタンAでAPI通信のループを開始
+  if (M5.BtnA.isPressed()) {
+    shouldFetchData = true;
+    M5.Lcd.fillScreen(BLACK);  // 画面をクリア
+    M5.Lcd.setCursor(0, 0);
+    M5.Lcd.println("Fetching Started...");
   }
 
+  // ボタンBでAPI通信のループを停止
+  if (M5.BtnB.isPressed()) {
+    shouldFetchData = false;
+    M5.Lcd.fillScreen(BLACK);  // 画面をクリア
+    M5.Lcd.setCursor(0, 0);
+    M5.Lcd.println("Fetching Stopped");
+  }
 
-  // // ビープ音を出す
-  // ledcWriteTone(0, 1000); // チャネル0で1 kHzのトーンを生成
-  // delay(500); // 500ミリ秒待つ
+  static unsigned long lastTime = 0;
+  unsigned long currentTime = millis();
 
-  // // トーンを停止
-  // ledcWriteTone(0, 0); // トーンを停止するには周波数を0に設定
-  // delay(500); // 500ミリ秒待つ
-
-  delay(4000);  // 次の動作までの待機時間
+  if (shouldFetchData && currentTime - lastTime > 10000) {  // 10秒ごとに実行
+    if (fetchAndDisplayData()) {
+      myservo.write(0);
+      for (pos = 0; pos <= 160; pos += 1) {
+        myservo.write(pos);
+        delay(5);
+      }
+      delay(6000);
+      for (pos = 160; pos >= 0; pos -= 1) {
+        myservo.write(pos);
+        delay(5);
+      }
+    }
+    lastTime = currentTime;
+    delay(500);
+  }
 }
