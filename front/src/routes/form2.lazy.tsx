@@ -18,7 +18,7 @@ function Form2() {
     <ArrowLeft className="size-5 text-gray-700"onClick={() => navigate({
         to: "/form1",
       })} />
-    <div className="text-gray-800 text-xl font-bold mt-2">相手の興味分野を選んでください</div>
+    <div className="text-gray-800 text-xl font-bold mt-2">興味分野を選んでください</div>
     <div className="text-gray-400 text-xs">ソフトスキルのマッチする相手を探しましょう！</div>
     <div className="w-[85%] mt-6 flex flex-col gap-y-10 items-center justify-center mx-auto">
       <div className="flex flex-col gap-y-2 items-center w-full justify-center">
