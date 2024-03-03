@@ -1,5 +1,5 @@
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
-import { GachaCard } from '../components/GachaGard';
+import { GachaCard } from '../components/GachaCard';
 import { mockUsers } from '../mock/users';
 import { Button } from '../components/ui/button';
 
@@ -25,7 +25,7 @@ function Matching() {
       <GachaCard user={mockUsers[0]} />
     </div>
     <div className='mt-4'><Button size="lg" className='rounded-full w-full' onClick={() => navigate({
-      to: "/",
+      to: "/home",
     })}>次へ</Button></div>
   </div>
 }

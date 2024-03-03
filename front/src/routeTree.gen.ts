@@ -17,6 +17,7 @@ import { Route as rootRoute } from './routes/__root'
 // Create Virtual Routes
 
 const MatchingLazyImport = createFileRoute('/matching')()
+const HomeLazyImport = createFileRoute('/home')()
 const Form2LazyImport = createFileRoute('/form2')()
 const Form1LazyImport = createFileRoute('/form1')()
 const FormLazyImport = createFileRoute('/form')()
@@ -29,6 +30,11 @@ const MatchingLazyRoute = MatchingLazyImport.update({
   path: '/matching',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/matching.lazy').then((d) => d.Route))
+
+const HomeLazyRoute = HomeLazyImport.update({
+  path: '/home',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/home.lazy').then((d) => d.Route))
 
 const Form2LazyRoute = Form2LazyImport.update({
   path: '/form2',
@@ -79,6 +85,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Form2LazyImport
       parentRoute: typeof rootRoute
     }
+    '/home': {
+      preLoaderRoute: typeof HomeLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/matching': {
       preLoaderRoute: typeof MatchingLazyImport
       parentRoute: typeof rootRoute
@@ -94,6 +104,7 @@ export const routeTree = rootRoute.addChildren([
   FormLazyRoute,
   Form1LazyRoute,
   Form2LazyRoute,
+  HomeLazyRoute,
   MatchingLazyRoute,
 ])
 

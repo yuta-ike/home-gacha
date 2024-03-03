@@ -1,7 +1,7 @@
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { FormSelectItem } from "../components/FormSelectItem";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2Icon } from "lucide-react";
 import { Button } from "../components/ui/button";
 
 export const Route = createLazyFileRoute('/form2')({
@@ -11,6 +11,7 @@ export const Route = createLazyFileRoute('/form2')({
 function Form2() {
   const [value, setValue] = useState("")
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   return (
   <div className="flex flex-col gap-y-2 px-2 py-4">
@@ -28,9 +29,15 @@ function Form2() {
       </div>
     </div>
     <div className="absolute bottom-8 w-[85%] left-1/2 right-1/2 -translate-x-1/2">
-      <Button className="rounded-full w-full" onClick={() => navigate({
-          to: "/matching",
-        })}>マッチングする</Button>
+      <Button disabled={loading} className="rounded-full w-full" onClick={() => {
+        setLoading(true)
+        setTimeout(() => {
+          navigate({
+            to: "/matching",
+          })
+        }, 1000)
+      }}>
+        {loading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}マッチングする</Button>
     </div>
   </div>
   )
