@@ -19,7 +19,7 @@ function Index() {
       <img src="capsules.png" alt="gachatte" className="max-w-[min(90%,300px)]"/>
       <div className="w-full flex flex-col gap-6">
         <Button className="rounded-full w-full py-6" size="lg" onClick={() => navigate({
-          to: "/form2",
+          to: "/form1",
         })}>登録する</Button>
         <Button className="rounded-full w-full py-6" size="lg" onClick={() => startGacha()}>ガチャを回す</Button>
       </div>
