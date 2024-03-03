@@ -27,7 +27,7 @@ function Index() {
       </div>
       <div className="absolute bottom-8 w-[85%] left-1/2 right-1/2 -translate-x-1/2">
       <Button className="rounded-full w-full flex gap-x-4" onClick={() => navigate({
-          to: "/form2",
+          to: "/form1",
         })}>
           <PlusIcon className='size-4' />
           新しい予定を追加</Button>
