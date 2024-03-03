@@ -1,8 +1,5 @@
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
-import { useGachaStatus } from '../hooks/useGachaStatus';
-import { useGachaStart } from '../hooks/useGachaStart';
 import { PlusIcon, SearchIcon, SettingsIcon, UsersIcon } from 'lucide-react';
-import { GachaCard } from '../components/GachaCard';
 import { mockUsers } from '../mock/users';
 import { GachaCardWithTag } from '../components/GachaCardTag';
 import { Button } from '../components/ui/button';
