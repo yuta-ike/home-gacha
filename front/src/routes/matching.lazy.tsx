@@ -1,5 +1,5 @@
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router';
-import { GachaCard } from '../components/GachaGard';
+import { GachaCard } from '../components/GachaCard';
 import { mockUsers } from '../mock/users';
 import { Button } from '../components/ui/button';
 
