@@ -2,12 +2,12 @@ import { User } from "../components/GachaCard";
 
 export const mockUsers: User[] = [
   {
-    name: "吉田 まもる",
-    profession: "企画",
+    name: "湯本 航基",
+    profession: "営業",
     yearsOfService: 3,
     interestedField: "プロダクトの成長",
     objective: "新しいプロダクトを作りたい",
-    imageUrl: "/yoshida.png",
+    imageUrl: "/yuuumin.png",
   },
   {
     name: "田中 あきら",
@@ -15,6 +15,6 @@ export const mockUsers: User[] = [
     yearsOfService: 5,
     interestedField: "技術のプロフェッショナル",
     objective: "新しいプロダクトを作りたい",
-    imageUrl: "/tanaka.png"
+    imageUrl: "/yoshida.png"
   }
 ]
