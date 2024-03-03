@@ -3,8 +3,9 @@ import { useGachaStatus } from "../hooks/useGachaStatus";
 import { User } from "./GachaCard";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { Drawer,  DrawerContent, DrawerDescription, DrawerHeader, DrawerTrigger } from "./ui/drawer"
+import { Drawer,  DrawerClose,  DrawerContent, DrawerDescription, DrawerHeader, DrawerTrigger } from "./ui/drawer"
 import { Separator } from "./ui/separator";
+import { useToast } from "./ui/use-toast";
 
 interface GachaCardDrawerProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ interface GachaCardDrawerProps {
 export const GachaCardDrawer: React.FC<GachaCardDrawerProps> = ({children, user}) => {
    const {fetchStatus} = useGachaStatus();
 	const { startGacha } = useGachaStart(fetchStatus);
+  const {toast} = useToast()
 
   return (
     <Drawer>
@@ -42,7 +44,7 @@ export const GachaCardDrawer: React.FC<GachaCardDrawerProps> = ({children, user}
                 <div>目標：{user.objective}</div>
               </div>
             </DrawerDescription>
-            <Button size="lg" className="rounded-full w-full mb-8" onClick={startGacha}>ガチャを回す</Button>
+            <DrawerClose asChild><Button size="lg" className="rounded-full w-full mb-8" onClick={startGacha}>ガチャを回す</Button></DrawerClose>
           </DrawerHeader>
         </div>
       </DrawerContent>

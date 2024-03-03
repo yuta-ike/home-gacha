@@ -20,15 +20,15 @@ export const GachaCardWithTag: React.FC<GachaCardWithTagProps> = ({ user }) => {
 		<GachaCardDrawer user={user}>
       <div className="rounded-lg bg-white px-8 py-6
       ">
-        <div className="flex flex-col gap-y-1">
-        <div className="text-2xl font-bold">
-          {user.name}
-        </div>
-        <Separator />
-        <div className="text-gray-700 text-sm flex items-center text-start gap-y-1">
-          <Badge variant="outline" className="text-green-600 border-green-600 bg-green-50">{user.profession}</Badge>
-          <Badge variant="outline" className="text-green-600 border-green-600 bg-green-50">{user.yearsOfService}年目</Badge>
-        </div>
+        <div className="flex flex-col gap-y-2">
+          <div className="text-2xl font-bold">
+            {user.name}
+          </div>
+          <Separator />
+          <div className="text-gray-700 text-sm flex items-center text-start gap-y-1 gap-x-2">
+            <Badge variant="outline" className="text-green-600 border-green-600 bg-green-50">{user.profession}</Badge>
+            <Badge variant="outline" className="text-green-600 border-green-600 bg-green-50">{user.yearsOfService}年目</Badge>
+          </div>
         </div>
       </div>
 		</GachaCardDrawer>
