@@ -1,9 +1,7 @@
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { Button } from "../components/ui/button";
 import { useState } from "react";
 import { FormSelectItem } from "../components/FormSelectItem";
 import { ArrowLeft } from "lucide-react";
-import { Progress } from "../components/ui/progress"
 
 export const Route = createLazyFileRoute('/form2')({
   component: Form2,
@@ -27,9 +25,9 @@ function Form2() {
         <FormSelectItem value="infra" label="マネジメント" selectedValue={value} setValue={setValue} />
         <FormSelectItem value="designer" label="お客様の声を聞く" selectedValue={value} setValue={setValue} />
       </div>
-      <Button className="rounded-full w-full" onClick={() => navigate({
+      {/* <Button className="rounded-full w-full" onClick={() => navigate({
         to: "/matching",
-      })}>次へ</Button>
+      })}>次へ</Button> */}
     </div>
   </div>
   )

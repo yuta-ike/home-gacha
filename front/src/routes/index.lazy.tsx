@@ -8,7 +8,7 @@ export const Route = createLazyFileRoute('/')({
 
 function Index() {
  const { status, fetchStatus} = useGachaStatus();
-	const { startGacha, data } = useGachaStart(fetchStatus);
+	const { startGacha } = useGachaStart(fetchStatus);
 
 
   return (
