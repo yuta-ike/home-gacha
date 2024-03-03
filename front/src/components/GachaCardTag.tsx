@@ -1,4 +1,5 @@
 import { GachaCardDrawer } from "./GachaCardDrawer";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
 
@@ -20,9 +21,15 @@ export const GachaCardWithTag: React.FC<GachaCardWithTagProps> = ({ user }) => {
 		<GachaCardDrawer user={user}>
       <div className="rounded-lg bg-white px-8 py-6
       ">
-        <div className="flex flex-col gap-y-2">
-          <div className="text-2xl font-bold">
-            {user.name}
+        <div className="flex flex-col gap-y-4">
+          <div className="flex gap-x-3">
+            <Avatar className="size-8">
+              <AvatarImage src={user.imageUrl} />
+              <AvatarFallback />
+            </Avatar>
+            <div className="text-2xl font-bold">
+              {user.name}
+            </div>
           </div>
           <Separator />
           <div className="text-gray-700 text-sm flex items-center text-start gap-y-1 gap-x-2">

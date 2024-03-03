@@ -7,7 +7,7 @@ export const mockUsers: User[] = [
     yearsOfService: 3,
     interestedField: "プロダクトの成長",
     objective: "新しいプロダクトを作りたい",
-    imageUrl: "/yuuumin.png",
+    imageUrl: "/yuuumin.jpeg",
   },
   {
     name: "田中 あきら",
