@@ -25,7 +25,7 @@ function Matching() {
       <GachaCard user={mockUsers[0]} />
     </div>
     <div className='mt-4'><Button size="lg" className='rounded-full w-full' onClick={() => navigate({
-      to: "/",
+      to: "/home",
     })}>次へ</Button></div>
   </div>
 }

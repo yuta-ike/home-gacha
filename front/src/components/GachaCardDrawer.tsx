@@ -1,3 +1,5 @@
+import { useGachaStart } from "../hooks/useGachaStart";
+import { useGachaStatus } from "../hooks/useGachaStatus";
 import { User } from "./GachaCard";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -10,6 +12,9 @@ interface GachaCardDrawerProps {
 }
 
 export const GachaCardDrawer: React.FC<GachaCardDrawerProps> = ({children, user}) => {
+   const {fetchStatus} = useGachaStatus();
+	const { startGacha } = useGachaStart(fetchStatus);
+
   return (
     <Drawer>
       <DrawerTrigger asChild className="focus-visible:outline-none">
@@ -37,7 +42,7 @@ export const GachaCardDrawer: React.FC<GachaCardDrawerProps> = ({children, user}
                 <div>目標：{user.objective}</div>
               </div>
             </DrawerDescription>
-            <Button size="lg" className="rounded-full w-full mb-8">ガチャを回す</Button>
+            <Button size="lg" className="rounded-full w-full mb-8" onClick={startGacha}>ガチャを回す</Button>
           </DrawerHeader>
         </div>
       </DrawerContent>
